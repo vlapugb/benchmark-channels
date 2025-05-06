@@ -5,10 +5,10 @@ use std::io::Write;
 use tokio::sync::mpsc;
 use tokio::task;
 use tokio::time::Instant;
+#[warn(unused_assignments)]
 #[tokio::main]
+
 async fn main() -> io::Result<()> {
-    let mut producers_vec: Vec<i64> = Vec::new();
-    let mut mes_per_prod_vec: Vec<i64> = Vec::new();
     let mut str = String::new();
     let mut str2 = String::new();
     let mut sum_a: f32 = 0.0;
@@ -16,13 +16,11 @@ async fn main() -> io::Result<()> {
     let mut sum_c: f32 = 0.0;
     io::stdin().read_line(&mut str).expect("error");
     io::stdin().read_line(&mut str2).expect("error");
-    producers_vec = str
-        .trim()
+    let producers_vec: Vec<i64> = str
         .split_whitespace()
         .map(|s| s.parse::<i64>().expect("error"))
         .collect();
-    mes_per_prod_vec = str2
-        .trim()
+    let mes_per_prod_vec: Vec<i64> = str2
         .split_whitespace()
         .map(|s| s.parse::<i64>().expect("error"))
         .collect();
@@ -95,7 +93,7 @@ async fn tokio_channel_bench(producer: i64, mes_per_prod: i64) -> i64 {
         producer,
         mes_per_prod
     );
-    return end.as_millis() as i64;
+    end.as_millis() as i64
 }
 
 async fn async_channel_bench(producer: i64, mes_per_prod: i64) -> i64 {
@@ -128,7 +126,7 @@ async fn async_channel_bench(producer: i64, mes_per_prod: i64) -> i64 {
         producer,
         mes_per_prod
     );
-    return end1.as_millis() as i64;
+    end1.as_millis() as i64
 }
 
 async fn async_channel_bench2(producer: i64, mes_per_prod: i64) -> i64 {
@@ -161,5 +159,5 @@ async fn async_channel_bench2(producer: i64, mes_per_prod: i64) -> i64 {
         producer,
         mes_per_prod
     );
-    return end1.as_millis() as i64;
+    end1.as_millis() as i64
 }
